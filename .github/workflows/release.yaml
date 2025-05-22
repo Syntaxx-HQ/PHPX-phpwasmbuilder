@@ -39,7 +39,7 @@ jobs:
           files: |
             ./docker-bake.hcl
           set: |
-            *.tags=ghcr.io/${{ github.repository_owner.toLowerCase() }}/phpx-phpwasmbuilder:standard-${{ github.ref_name || inputs.version }}
+            *.tags=ghcr.io/syntaxx-hq/phpx-phpwasmbuilder:standard-${{ github.ref_name || inputs.version }}
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
 
@@ -50,7 +50,7 @@ jobs:
           files: |
             ./docker-bake.hcl
           set: |
-            *.tags=ghcr.io/${{ github.repository_owner.toLowerCase() }}/phpx-phpwasmbuilder:vrzno-${{ github.ref_name || inputs.version }}
+            *.tags=ghcr.io/syntaxx-hq/phpx-phpwasmbuilder:vrzno-${{ github.ref_name || inputs.version }}
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
 
