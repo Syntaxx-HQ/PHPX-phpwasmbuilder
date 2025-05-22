@@ -81,7 +81,7 @@ RUN cd /src/php-src && emcc $OPTIMIZE \
         -s ERROR_ON_UNDEFINED_SYMBOLS=0
 # emcc -O1 insted of emcc $OPTIMIZE  we want to process JS file further
 RUN mkdir /build && cd /src/php-src && emcc $OPTIMIZE \
-    -o /build/php-$WASM_ENVIRONMENT.$JAVASCRIPT_EXTENSION \
+    -o /build/php-vrzno-$WASM_ENVIRONMENT.$JAVASCRIPT_EXTENSION \
     --llvm-lto 2                     \
     --minify 0 \
     -s EXPORTED_FUNCTIONS='["_phpw_with_args"]' \
