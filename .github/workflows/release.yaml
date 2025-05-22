@@ -67,5 +67,5 @@ jobs:
           files: |
             build/*.wasm
             build/*.js
+            build/*.mjs
             build/*.d.ts
-
