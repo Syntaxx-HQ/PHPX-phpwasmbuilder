@@ -41,6 +41,14 @@ function wasm_build()
     run(['docker', 'buildx', 'bake']);
 }
 
+#[AsTask('wasm:build:vrzno', description: 'Build the wasm-php binary with vrzno')]
+function wasm_build_vrzno()
+{
+    io()->title('Building wasm-php binary');
+
+    run(['docker', 'buildx', 'bake', 'vrzno']);
+}
+
 #[AsTask('wasm:pack', description: 'Pack custom code')]
 function wasm_pack()
 {
