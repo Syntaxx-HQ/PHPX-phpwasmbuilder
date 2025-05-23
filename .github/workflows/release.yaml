@@ -24,6 +24,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Read PHP_BRANCH from .env
+        id: env
+        run: |
+          echo "PHP_BRANCH=$(grep PHP_BRANCH .env | cut -d '=' -f2)" >> $GITHUB_OUTPUT
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -33,6 +38,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Debug PHP_BRANCH value
+        run: |
+          echo "PHP_BRANCH from env: ${{ steps.env.outputs.PHP_BRANCH }}"
+          echo "PHP_BRANCH from .env file:"
+          cat .env | grep PHP_BRANCH
 
       - name: Build standard wasm using Docker Buildx Bake
         uses: docker/bake-action@v4
