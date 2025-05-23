@@ -44,6 +44,7 @@ jobs:
             *.tags=ghcr.io/syntaxx-hq/phpx-phpwasmbuilder:standard-${{ github.ref_name || inputs.version }}
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
+            *.args.PHP_BRANCH=${{ steps.env.outputs.PHP_BRANCH }}
 
       - name: Build VRZNO wasm using Docker Buildx Bake
         uses: docker/bake-action@v4
@@ -55,6 +56,7 @@ jobs:
             *.tags=ghcr.io/syntaxx-hq/phpx-phpwasmbuilder:vrzno-${{ github.ref_name || inputs.version }}
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
+            *.args.PHP_BRANCH=${{ steps.env.outputs.PHP_BRANCH }}
 
       - name: Create Release
         id: create_release
