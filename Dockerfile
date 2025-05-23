@@ -16,7 +16,7 @@ RUN apt-get update && \
     re2c
 
 FROM build_tool AS php_src
-ARG PHP_BRANCH=PHP-8.3.0
+ARG PHP_BRANCH=PHP-8.3.22
 RUN git clone https://github.com/php/php-src.git php-src \
         --branch $PHP_BRANCH \
         --single-branch \
