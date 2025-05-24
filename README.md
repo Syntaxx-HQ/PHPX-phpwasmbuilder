@@ -1,29 +1,69 @@
-# Composer Lock Comparison
+# PHP WebAssembly Builder
 
-This project host a web application where you can paste two `composer.lock` and
-get a beautiful diff of the two files.
+This project provides a Docker-based build system for creating PHP WebAssembly (WASM) modules that can run PHP code directly in the browser. It supports two build variants:
 
-## Deployment
+1. Standard PHP WASM build
+2. PHP WASM build with VRZNO extension support
 
-This website is [deployed on github pages](https://lyrixx.github.io/composer-diff/).
+## Features
 
-## Installation
+- Builds PHP 8.x as WebAssembly modules
+- Supports both standard and VRZNO-enabled builds
+- Configurable PHP version through environment variables
+- Optimized for browser usage
+- Includes essential PHP extensions (json, ctype, mbstring, tokenizer)
 
+## Prerequisites
+
+- Docker
+- Docker Buildx (for multi-target builds)
+
+## Building
+
+### Using Docker Buildx
+
+```bash
+# Build standard PHP WASM
+docker buildx bake standard
+
+# Build PHP WASM with VRZNO extension
+docker buildx bake vrzno
 ```
-castor install
-castor wasm:export --pack --build
-castor serve
-open http://127.0.0.1:9999/
+
+### Using Docker directly
+
+```bash
+# Set PHP version in .env file
+echo "PHP_BRANCH=PHP-8.4.7" > .env
+
+# Build using build script
+./build.sh
 ```
 
-## Internal
+The build artifacts will be available in the `build/` directory.
 
-This website use WASM to run a PHP interpreter in the browser.
-You can have a look to the `Dockerfile`, and `castor.php` to see how it works.
+## Configuration
 
-## Thanks
+You can customize the build by modifying the following:
 
-We would like to thanks the following projects, for inspiration, code, or both:
+- `.env` file: Set the PHP version to build
+- `Dockerfile`: Configure build options and PHP extensions
+- `docker-bake.hcl`: Define build targets and output settings
 
-* https://github.com/soyuka/php-wasm
-* https://github.com/IonBazan/composer-diff
+## Build Options
+
+The build process supports several configuration options:
+
+- `WASM_ENVIRONMENT`: Target environment (default: web)
+- `JAVASCRIPT_EXTENSION`: Output file extension (default: mjs)
+- `INITIAL_MEMORY`: Initial memory allocation (default: 256mb)
+- `OPTIMIZE`: Optimization level (default: -O1)
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Acknowledgments
+
+This project builds upon the work of:
+
