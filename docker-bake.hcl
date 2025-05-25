@@ -5,7 +5,7 @@ target "default" {
 
 target "vrzno" {
 	context = "."
-	dockerfile = "Dockerfile copy"
+	dockerfile = "DockerfileVrzno"
 	output = ["type=local,dest=./build"]
 	tags = ["php-wasm-vrzno"]
 }
