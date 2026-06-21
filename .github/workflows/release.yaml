@@ -24,10 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Read PHP_BRANCH from .env
+      - name: Derive PHP_BRANCH from the release tag
         id: env
         run: |
-          echo "PHP_BRANCH=$(grep PHP_BRANCH .env | cut -d '=' -f2)" >> $GITHUB_OUTPUT
+          # The release tag is the source of truth for the PHP version, so a
+          # vX.Y.Z tag always builds the matching php-src ref (no drift from a
+          # hardcoded .env). e.g. v8.4.22 -> PHP-8.4.22
+          REF="${{ github.ref_name || inputs.version }}"
+          PHP_BRANCH="PHP-${REF#v}"
+          echo "PHP_BRANCH=${PHP_BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "Tag ${REF} -> PHP_BRANCH=${PHP_BRANCH}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -39,11 +45,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Debug PHP_BRANCH value
-        run: |
-          echo "PHP_BRANCH from env: ${{ steps.env.outputs.PHP_BRANCH }}"
-          echo "PHP_BRANCH from .env file:"
-          cat .env | grep PHP_BRANCH
+      - name: Show resolved PHP_BRANCH
+        run: echo "Building php-src ref ${{ steps.env.outputs.PHP_BRANCH }} for release ${{ github.ref_name || inputs.version }}"
 
       - name: Build standard wasm using Docker Buildx Bake
         uses: docker/bake-action@v5
