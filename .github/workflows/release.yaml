@@ -46,7 +46,7 @@ jobs:
           cat .env | grep PHP_BRANCH
 
       - name: Build standard wasm using Docker Buildx Bake
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: standard
           files: |
@@ -58,7 +58,7 @@ jobs:
             *.args.PHP_BRANCH=${{ steps.env.outputs.PHP_BRANCH }}
 
       - name: Build VRZNO wasm using Docker Buildx Bake
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: vrzno
           files: |
